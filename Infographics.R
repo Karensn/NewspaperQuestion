@@ -17,14 +17,21 @@ sleep_data = msleep |>
   )
 
 # Set the colors (Using HEX)
-set_manual_colors = c(
+default_colors = c(
   "Herbivores" = "#399B7E", "Carnivores" = "#BDBDBD",
   "Omnivores" = "#7795B6", "Insectivores" = "#D89A50")
+
+# Read colours supplied through command-line arguments
+arguments = commandArgs(trailingOnly = TRUE)
+
+# Use supplied colours if provided, otherwise use defaults
+if (length(arguments) == 4) {
+  set_manual_colors = setNames(arguments, names(default_colors))} else {
+  set_manual_colors = default_colors}
 
 # Identify the five biggest animals
 biggest_animals = sleep_data |> 
   slice_max(bodywt, n = 5) # Select row based on highest calue in column
-
 
 
 p = ggplot(
